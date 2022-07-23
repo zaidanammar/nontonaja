@@ -1,50 +1,47 @@
 import React from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
+import InfiniteScroll from "react-infinite-scroller";
+
 import OCardContainer from "../../components/organisms/OCardContainer";
 import MMovieCard from "../../components/molecules/MMovieCard";
 import { MovieCardSkeleton } from "../../components/molecules/MSkeleton";
+import { useFetchMovies } from "../../hooks/movie";
+import { IMovie } from "../../core/movie/entities";
 
 const Movie = () => {
+  const { data, isLoading, fetchNextPage, hasNextPage } = useFetchMovies({
+    s: "spider",
+  });
+
   return (
     <main className="text-white">
-      <OCardContainer>
-        {/* {new Array(12).fill(1).map((_, index) => (
-          <MovieCardSkeleton key={index} />
-        ))} */}
-      </OCardContainer>
-
-      {/* <InfiniteScroll
-        dataLength={Infinity}
-        next={fetchNextPage}
-        hasMore={hasNextPage}
-        loader={
+      {isLoading ? (
+        <OCardContainer>
+          {new Array(12).fill(1).map((_, index) => (
+            <MovieCardSkeleton key={index} />
+          ))}
+        </OCardContainer>
+      ) : (
+        <InfiniteScroll
+          loadMore={() => fetchNextPage()}
+          hasMore={hasNextPage}
+          loader={
+            <OCardContainer>
+              {new Array(6).fill(1).map((_, index) => (
+                <MovieCardSkeleton key={index} />
+              ))}
+            </OCardContainer>
+          }
+        >
           <OCardContainer>
-            {new Array(12).fill(1).map((_, index) => (
-              <MovieCardSkeleton key={index} />
-            ))}
+            {data &&
+              data?.pages?.map((page) =>
+                page?.Search?.map((movie: IMovie) => (
+                  <MMovieCard key={movie.imdbID} movie={movie} />
+                ))
+              )}
           </OCardContainer>
-        }
-        endMessage={<></>}
-      > */}
-      <OCardContainer>
-        {/* {dataProducts &&
-          dataProducts?.pages?.map((page) =>
-            page?.results?.products?.map((item) => (
-              <div
-                key={`${item.id}`}
-                style={{ maxWidth: "185px" }}
-                className="mr-10 w-full"
-              >
-                <MItemCard data={item} />
-              </div>
-            ))
-          )} */}
-
-        {new Array(24).fill(1).map((_, index) => (
-          <MMovieCard key={index} />
-        ))}
-      </OCardContainer>
-      {/* </InfiniteScroll> */}
+        </InfiniteScroll>
+      )}
     </main>
   );
 };
