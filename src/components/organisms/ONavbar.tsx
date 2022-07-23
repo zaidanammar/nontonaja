@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { IconButton } from "@mui/material";
-import { BiArrowBack } from "react-icons/bi";
+import { IoIosArrowBack } from "react-icons/io";
 import { BsCart2 } from "react-icons/bs";
 import { debounce } from "lodash";
 
@@ -23,14 +23,16 @@ const ONavbar = () => {
 
   return (
     <nav className="sm:h-[5.5rem] h-[5rem] w-full fixed inset-0 z-20 bg-slate-200 shadow-2xl">
-      <section className="flex sm:gap-5 items-center h-full w-full container mx-auto">
+      <section className="flex sm:gap-5 gap-3 items-center h-full w-full container mx-auto">
         <div className="w-fit">
           <div className="sm:flex hidden">
             <h1 className="text-4xl font-bold text-primary">ZaifliX</h1>
           </div>
           {pathname !== "/home" && (
             <div className="sm:hidden flex">
-              <BiArrowBack size={32} />
+              <IconButton>
+                <IoIosArrowBack size={32} />
+              </IconButton>
             </div>
           )}
         </div>
