@@ -4,6 +4,7 @@ import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import ALoading from "../components/atoms/ALoading";
 
 const Movie = React.lazy(() => import("../pages/movie/Movie"));
+const MovieDetail = React.lazy(() => import("../pages/movie/MovieDetail"));
 
 const MainRoutes = () => {
   return (
@@ -18,6 +19,7 @@ const MainRoutes = () => {
         <Routes>
           <Route path="/" element={<Outlet />}>
             <Route path="/movie" element={<Movie />} />
+            <Route path="/movie/:id" element={<MovieDetail />} />
 
             <Route path="/" element={<Navigate replace to="/movie" />} />
           </Route>

@@ -8,5 +8,6 @@ export interface IMovie {
 
 interface IMovieFilter {
   search: string;
+  id: string;
 }
 export type PMovieFilter = Partial<IMovieFilter>;

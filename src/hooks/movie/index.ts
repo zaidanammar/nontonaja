@@ -1,5 +1,5 @@
 import { MovieService } from "../../apis/movie";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 type useFetchMoviesProps = {
   search: string;
@@ -28,4 +28,10 @@ const useFetchMovies = ({
   );
 };
 
-export { useFetchMovies };
+const useFetchMovie = (id: string) => {
+  return useQuery([`movie-${id}`], () => MovieService.getMovie(id), {
+    refetchOnWindowFocus: false,
+  });
+};
+
+export { useFetchMovies, useFetchMovie };

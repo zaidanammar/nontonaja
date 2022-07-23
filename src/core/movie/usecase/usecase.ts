@@ -21,4 +21,8 @@ export default class MovieUsecase implements IMovieUsecase {
   }> {
     return await this.movieRepo.getMovies(filter, page);
   }
+
+  async getMovie(id: string): Promise<IMovie> {
+    return await this.movieRepo.getMovie(id);
+  }
 }

@@ -4,9 +4,10 @@ import IMovieRepository from "../repository";
 import Instance from "../../../config";
 
 export default class MovieRepository implements IMovieRepository {
-  getParams(filter: PMovieFilter, page: number) {
+  getParams(filter: PMovieFilter, page?: number) {
     const params = _.pickBy(
       {
+        i: filter.id,
         s: filter.search,
         page,
       },
@@ -33,14 +34,25 @@ export default class MovieRepository implements IMovieRepository {
       });
       const { data } = response;
 
-      if (data.Response === "False") {
-        throw data.Error;
-      }
       return {
         ...data,
         nextPage: page + 1,
         totalPage: Math.ceil(Number(data.totalResults) / 10),
       };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getMovie(id: string): Promise<IMovie> {
+    try {
+      const response = await Instance().get(`/`, {
+        params: {
+          ...this.getParams({ id }),
+        },
+      });
+      const { data } = response;
+      return data;
     } catch (error) {
       throw error;
     }

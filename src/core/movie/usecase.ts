@@ -11,4 +11,6 @@ export default interface IMovieUsecase {
     nextPage: number;
     totalPage: number;
   }>;
+
+  getMovie(id: string): Promise<IMovie>;
 }
