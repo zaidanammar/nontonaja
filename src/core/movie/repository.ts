@@ -1,10 +1,10 @@
-import { IMovie } from "./entities";
+import { IMovie, PMovieFilter } from "./entities";
 
 export default interface IMovieRepository {
-  getMovies(filter: {
-    s: string;
-    page: number;
-  }): Promise<{
+  getMovies(
+    filter: PMovieFilter,
+    page: number
+  ): Promise<{
     Response: string;
     Search: IMovie[];
     totalResults: string;

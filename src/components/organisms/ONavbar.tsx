@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { IconButton } from "@mui/material";
+import { IconButton, MenuItem, MenuList } from "@mui/material";
 import { IoIosArrowBack } from "react-icons/io";
 import { BsCart2 } from "react-icons/bs";
 import { debounce } from "lodash";
@@ -8,29 +8,40 @@ import { debounce } from "lodash";
 import ABadge from "../atoms/ABadge";
 import AButton from "../atoms/AButton";
 import MSearchbar from "../molecules/MSearchbar";
+import { useFetchMovies } from "../../hooks/movie";
 
 const ONavbar = () => {
-  const [searchInput, setSearchInput] = useState("");
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [OpenSearchBar, setOpenSearchBar] = useState(false);
-
-  //   const handleClick = (event: React.FormEvent<HTMLInputElement>) => {
-  //     setAnchorEl(event.currentTarget);
-  //   };
-
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  const [searchInput, setSearchInput] = useState("");
+  const [OpenSearchBar, setOpenSearchBar] = useState(false);
+
+  const { data } = useFetchMovies({
+    dependency: searchInput,
+    search: searchInput,
+    enabled: searchInput.length <= 0 ? false : true,
+  });
+
+  const handleSearch = (keyword: string) => {
+    navigate({ pathname, search: `s=${keyword}` });
+  };
+
   return (
     <nav className="sm:h-[5.5rem] h-[5rem] w-full fixed inset-0 z-20 bg-slate-200 shadow-2xl">
-      <section className="flex sm:gap-5 gap-3 items-center h-full w-full container mx-auto">
+      <section className="flex sm:gap-5 items-center h-full w-full container mx-auto">
         <div className="w-fit">
           <div className="sm:flex hidden">
-            <h1 className="text-4xl font-bold text-primary">ZaifliX</h1>
+            <h1
+              onClick={() => navigate("/movie")}
+              className="text-4xl font-bold text-primary"
+            >
+              ZaifliX
+            </h1>
           </div>
-          {pathname !== "/home" && (
+          {pathname !== "/movie" && (
             <div className="sm:hidden flex">
-              <IconButton>
+              <IconButton onClick={() => navigate(-1)}>
                 <IoIosArrowBack size={32} />
               </IconButton>
             </div>
@@ -42,7 +53,7 @@ const ONavbar = () => {
             <MSearchbar
               onChange={debounce((e: React.ChangeEvent<HTMLInputElement>) => {
                 setSearchInput(e.target.value);
-              }, 200)}
+              }, 300)}
               onParentFocus={() => setOpenSearchBar(true)}
               onParentBlur={(event) => {
                 if (!event.currentTarget.contains(event.relatedTarget)) {
@@ -51,68 +62,34 @@ const ONavbar = () => {
               }}
               placeholder="Cari film? Cari disini yuk"
             >
-              {/* {OpenSearchBar && data && (
-                  <div className="bg-white w-full px-2 mt-2 shadow-sm rounded">
-                    {data?.products?.length === 0 &&
-                      data?.outlets?.length === 0 && (
-                        <p className="text-xs text-gray ml-2 py-4">No result</p>
-                      )}
-                    {data.products.length > 0 && (
-                      <>
-                        <p className="text-sm ml-2 pt-3 mb-2">Products</p>
-                        <Divider />
-                        <MenuList dense>
-                          {data.products.map((product, index) => {
-                            return (
-                              <MenuItem
-                                onClick={() => {
-                                  navigateTo("/product?search=" + product.name);
-                                  setOpenSearchBar(false);
-                                }}
-                                sx={{ color: "gray" }}
-                                key={index}
-                              >
-                                {product.name}
-                              </MenuItem>
-                            );
-                          })}
-                        </MenuList>
-                      </>
-                    )}
-                  </div>
-                )} */}
+              {OpenSearchBar && (
+                <div className="bg-white w-full px-2 mt-2 shadow-sm rounded">
+                  {!data?.pages[0] && (
+                    <p className="text-xs text-gray ml-2 py-3">No results</p>
+                  )}
+                  {data?.pages[0] && data?.pages[0]?.Search?.length > 0 && (
+                    <section>
+                      <MenuList dense>
+                        {data.pages[0]?.Search?.map((movie) => {
+                          return (
+                            <MenuItem
+                              onClick={async () => {
+                                handleSearch(movie.Title);
+                                setOpenSearchBar(false);
+                              }}
+                              sx={{ color: "gray" }}
+                              key={movie.imdbID}
+                            >
+                              {movie.Title}
+                            </MenuItem>
+                          );
+                        })}
+                      </MenuList>
+                    </section>
+                  )}
+                </div>
+              )}
             </MSearchbar>
-
-            {/* {auth.accessToken && (
-              <div className="flex justify-evenly gap-4 sm:gap-6 items-center">
-                <div
-                  className="cursor-pointer sm:w-full w-8"
-                  onClick={() => navigateTo("/cart")}
-                >
-                  <Badge
-                    badgeContent={dataCounter?.data}
-                    color="primary"
-                    max={99}
-                  >
-                    <BsCart2 size={25} className="fill-primary" />
-                  </Badge>
-                </div>
-                <div className="sm:flex mt-1 hidden cursor-pointer">
-                  <Badge badgeContent={1000} color="primary" max={99}>
-                    <IoIosNotificationsOutline
-                      size={30}
-                      className="fill-primary"
-                    />
-                  </Badge>
-                </div>
-                <div
-                  className="cursor-pointer w-8 sm:hidden"
-                  onClick={() => navigateTo("/account")}
-                >
-                  <Avatar sx={{ width: "30px", height: "30px" }} />
-                </div>
-              </div>
-            )} */}
           </div>
 
           <div className="flex items-center sm:w-[30%] h-10">

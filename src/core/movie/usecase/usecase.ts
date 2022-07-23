@@ -1,4 +1,4 @@
-import { IMovie } from "../entities";
+import { IMovie, PMovieFilter } from "../entities";
 import IMovieRepository from "../repository";
 import IMovieUsecase from "../usecase";
 
@@ -9,16 +9,16 @@ export default class MovieUsecase implements IMovieUsecase {
     this.movieRepo = movieRepo;
   }
 
-  async getMovies(filter: {
-    s: string;
-    page: number;
-  }): Promise<{
+  async getMovies(
+    filter: PMovieFilter,
+    page: number
+  ): Promise<{
     Response: string;
     Search: IMovie[];
     totalResults: string;
     nextPage: number;
     totalPage: number;
   }> {
-    return await this.movieRepo.getMovies(filter);
+    return await this.movieRepo.getMovies(filter, page);
   }
 }

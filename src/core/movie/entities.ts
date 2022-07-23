@@ -5,3 +5,8 @@ export interface IMovie {
   Year: string;
   imdbID: string;
 }
+
+interface IMovieFilter {
+  search: string;
+}
+export type PMovieFilter = Partial<IMovieFilter>;
