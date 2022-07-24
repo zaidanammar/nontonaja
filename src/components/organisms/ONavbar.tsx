@@ -9,10 +9,13 @@ import ABadge from "../atoms/ABadge";
 import AButton from "../atoms/AButton";
 import MSearchbar from "../molecules/MSearchbar";
 import { useFetchMovies } from "../../hooks/movie";
+import { useAppSelector } from "../../store/hooks";
+import { selectWishlist } from "../../store/wishlists/wishlistsSlice";
 
 const ONavbar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const wishlists = useAppSelector(selectWishlist);
 
   const [searchInput, setSearchInput] = useState("");
   const [OpenSearchBar, setOpenSearchBar] = useState(false);
@@ -97,7 +100,7 @@ const ONavbar = () => {
               <AButton handleClick={() => navigate("/wishlist")}>
                 <p className="ml-3">Wishlist</p>
                 <IconButton>
-                  <ABadge badgeContent={2} color="secondary">
+                  <ABadge badgeContent={wishlists.length} color="secondary">
                     <BsCart2 className="fill-white" size={18} />
                   </ABadge>
                 </IconButton>

@@ -14,7 +14,7 @@ const Wishlist = () => {
     <main className="text-white">
       {isEmpty(wishlists) ? (
         <section className="flex justify-center pt-10">
-          <p className="text-white font-bold">Your wishlist is still empty :(</p>
+          <p className="text-white font-bold">Your wishlist is empty :(</p>
         </section>
       ) : (
         <OCardContainer>

@@ -13,23 +13,34 @@ import {
 import ALoading from "../../components/atoms/ALoading";
 import AButton from "../../components/atoms/AButton";
 import { IMovie } from "../../core/movie/entities";
+import { useSnackbar } from "notistack";
 
 const MovieDetail = () => {
-  const wishlists = useAppSelector(selectWishlist);
-  const dispatch = useAppDispatch();
   const params = useParams();
+  const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
+  const wishlists = useAppSelector(selectWishlist);
   const { data, isLoading } = useFetchMovie(params?.id || "");
 
   const handleAddToWishlist = (movie: IMovie) => {
-    wishlists.includes(movie)
-      ? console.log("already exists")
-      : dispatch(addToWishlist(movie));
+    if (wishlists.includes(movie)) {
+      enqueueSnackbar("This movie is already exists on your wishlist!", {
+        variant: "error",
+        autoHideDuration: 1500,
+      });
+    } else {
+      dispatch(addToWishlist(movie));
+      enqueueSnackbar("Movie added to wishlist!", {
+        variant: "success",
+        autoHideDuration: 1500,
+      });
+    }
   };
 
   return (
     <main className="text-white xs:mt-5 mt-4 xs:mb-5 mb-28">
       {isLoading && (
-        <div className="flex justify-center my-6">
+        <div className="flex justify-center my-10">
           <ALoading />
         </div>
       )}

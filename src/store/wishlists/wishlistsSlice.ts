@@ -11,10 +11,16 @@ const wishlistsSlice = createSlice({
     addToWishlist(state, action: PayloadAction<IMovie>) {
       state.push(action.payload);
     },
+    removeFromWishlist(state, action: PayloadAction<{ id: string }>) {
+      const newWishlist = [...state].filter(
+        (wishlist) => wishlist.imdbID !== action.payload.id
+      );
+      return newWishlist;
+    },
   },
 });
 
-export const { addToWishlist } = wishlistsSlice.actions;
+export const { addToWishlist, removeFromWishlist } = wishlistsSlice.actions;
 export const selectWishlist = (state: RootState) => state.wishlists;
 
 export default wishlistsSlice.reducer;
