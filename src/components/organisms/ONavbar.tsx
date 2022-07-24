@@ -43,7 +43,7 @@ const ONavbar = () => {
             </h1>
           </div>
           {pathname !== "/movie" && (
-            <div className="sm:hidden flex">
+            <div className="sm:hidden flex -ml-4">
               <IconButton onClick={() => navigate(-1)}>
                 <IoIosArrowBack size={32} />
               </IconButton>
@@ -108,7 +108,7 @@ const ONavbar = () => {
             </div>
             <div className="sm:hidden">
               <IconButton onClick={() => navigate("/wishlist")}>
-                <ABadge badgeContent={2}>
+                <ABadge badgeContent={wishlists.length}>
                   <BsCart2 className="fill-primary" size={24} />
                 </ABadge>
               </IconButton>

@@ -73,23 +73,41 @@ const MovieDetail = () => {
             <section id="detail-info" className="mt-1">
               <h1 className="font-bold">Detail Info</h1>
               <div className="flex my-2.5 gap-6">
-                <div className="flex flex-col text-sm">
-                  <p>Actors</p>
-                  <p>Writers</p>
-                  <p>Director</p>
-                  <p>Genre</p>
-                  <p>Production</p>
-                  <p>Released</p>
-                  <p>Country</p>
-                </div>
-                <div className="flex flex-col text-sm">
-                  <p>{data.Actors}</p>
-                  <p>{data.Writer}</p>
-                  <p>{data.Director}</p>
-                  <p>{data.Genre}</p>
-                  <p>{data.Production}</p>
-                  <p>{data.Released}</p>
-                  <p>{data.Country}</p>
+                <div className="flex flex-col text-sm w-full">
+                  <div className="flex items-start w-full my-0.5">
+                    <p className="xs:w-1/6 w-1/4">Actors</p>
+                    <p className="flex-1">{data.Actors}</p>
+                  </div>
+
+                  <div className="flex items-start w-full my-0.5">
+                    <p className="xs:w-1/6 w-1/4">Writers</p>
+                    <p className="flex-1">{data.Writer}</p>
+                  </div>
+
+                  <div className="flex items-start w-full my-0.5">
+                    <p className="xs:w-1/6 w-1/4">Director</p>
+                    <p className="flex-1">{data.Director}</p>
+                  </div>
+
+                  <div className="flex items-start w-full my-0.5">
+                    <p className="xs:w-1/6 w-1/4">Genre</p>
+                    <p className="flex-1"> {data.Genre}</p>
+                  </div>
+
+                  <div className="flex items-start w-full my-0.5">
+                    <p className="xs:w-1/6 w-1/4">Production</p>
+                    <p className="flex-1">{data.Production}</p>
+                  </div>
+
+                  <div className="flex items-start w-full my-0.5">
+                    <p className="xs:w-1/6 w-1/4">Released</p>
+                    <p className="flex-1">{data.Released}</p>
+                  </div>
+
+                  <div className="flex items-start w-full my-0.5">
+                    <p className="xs:w-1/6 w-1/4">Country</p>
+                    <p className="flex-1">{data.Country}</p>
+                  </div>
                 </div>
               </div>
             </section>
