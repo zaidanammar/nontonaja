@@ -24,7 +24,7 @@ const MMovieCard = ({ movie }: Props) => {
       <section className="relative w-full cursor-pointer h-[17rem] rounded-md">
         <div onClick={() => setOpenPopup(true)}>
           <div
-            className="h-[15rem] absolute w-full bg-no-repeat bg-cover bg-center rounded-md"
+            className="h-[15rem] absolute w-full bg-no-repeat bg-cover bg-center rounded-t-md"
             style={{
               backgroundImage: `url(${movie.Poster})`,
             }}

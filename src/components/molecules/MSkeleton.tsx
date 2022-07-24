@@ -2,9 +2,7 @@ import { Skeleton } from "@mui/material";
 
 export const MovieCardSkeleton = () => {
   return (
-    <div
-      className="p-4 bg-white shadow-sm w-full min-w-[150px]"
-    >
+    <div className="p-4 bg-white shadow-sm w-full min-w-[150px]">
       <Skeleton
         animation="wave"
         variant="rectangular"

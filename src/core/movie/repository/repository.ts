@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { IMovie, PMovieFilter } from "../entities";
+import { IMovie, IMovieDetail, PMovieFilter } from "../entities";
 import IMovieRepository from "../repository";
 import Instance from "../../../config";
 
@@ -44,7 +44,7 @@ export default class MovieRepository implements IMovieRepository {
     }
   }
 
-  async getMovie(id: string): Promise<IMovie> {
+  async getMovie(id: string): Promise<IMovieDetail> {
     try {
       const response = await Instance().get(`/`, {
         params: {
