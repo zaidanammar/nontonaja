@@ -5,9 +5,10 @@ import OPopupImage from "../organisms/OPopupImage";
 
 type Props = {
   movie: IMovie;
+  wishlist?: boolean;
 };
 
-const MMovieCard = ({ movie }: Props) => {
+const MMovieCard = ({ movie, wishlist }: Props) => {
   const navigate = useNavigate();
   const [openPopup, setOpenPopup] = useState(false);
 
@@ -39,7 +40,7 @@ const MMovieCard = ({ movie }: Props) => {
           onClick={() => navigate(`/movie/${movie?.imdbID}`)}
           className="w-full h-[2rem] bg-primary hover:bg-red-800 hover:duration-500 hover:ease-in-out transition-all flex justify-center items-center absolute bottom-0 rounded-b-md"
         >
-          <p className="text-sm">Details</p>
+          <p className="text-sm font-bold">{wishlist ? "Remove" : "Details"}</p>
         </div>
       </section>
     </>

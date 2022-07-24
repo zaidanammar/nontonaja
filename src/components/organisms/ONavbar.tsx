@@ -24,7 +24,7 @@ const ONavbar = () => {
   });
 
   const handleSearch = (keyword: string) => {
-    navigate({ pathname, search: `s=${keyword}` });
+    navigate({ pathname: "/movie", search: `s=${keyword}` });
   };
 
   return (
@@ -34,7 +34,7 @@ const ONavbar = () => {
           <div className="sm:flex hidden">
             <h1
               onClick={() => navigate("/movie")}
-              className="text-4xl font-bold text-primary"
+              className="text-4xl font-bold text-primary cursor-pointer"
             >
               ZaifliX
             </h1>
@@ -94,7 +94,7 @@ const ONavbar = () => {
 
           <div className="flex items-center sm:w-[30%] h-10">
             <div className="sm:flex hidden w-full h-full">
-              <AButton>
+              <AButton handleClick={() => navigate("/wishlist")}>
                 <p className="ml-3">Wishlist</p>
                 <IconButton>
                   <ABadge badgeContent={2} color="secondary">
@@ -104,7 +104,7 @@ const ONavbar = () => {
               </AButton>
             </div>
             <div className="sm:hidden">
-              <IconButton>
+              <IconButton onClick={() => navigate("/wishlist")}>
                 <ABadge badgeContent={2}>
                   <BsCart2 className="fill-primary" size={24} />
                 </ABadge>

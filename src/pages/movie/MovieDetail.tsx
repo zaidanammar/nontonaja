@@ -5,15 +5,29 @@ import { BsCart2 } from "react-icons/bs";
 import { Divider } from "@mui/material";
 
 import { useFetchMovie } from "../../hooks/movie";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import {
+  addToWishlist,
+  selectWishlist,
+} from "../../store/wishlists/wishlistsSlice";
 import ALoading from "../../components/atoms/ALoading";
 import AButton from "../../components/atoms/AButton";
+import { IMovie } from "../../core/movie/entities";
 
 const MovieDetail = () => {
+  const wishlists = useAppSelector(selectWishlist);
+  const dispatch = useAppDispatch();
   const params = useParams();
   const { data, isLoading } = useFetchMovie(params?.id || "");
 
+  const handleAddToWishlist = (movie: IMovie) => {
+    wishlists.includes(movie)
+      ? console.log("already exists")
+      : dispatch(addToWishlist(movie));
+  };
+
   return (
-    <main className="text-white xs:mt-5 mt-4 xs:mb-0 mb-28">
+    <main className="text-white xs:mt-5 mt-4 xs:mb-5 mb-28">
       {isLoading && (
         <div className="flex justify-center my-6">
           <ALoading />
@@ -25,7 +39,7 @@ const MovieDetail = () => {
             <img
               src={data?.Poster}
               alt="-"
-              className="object-cover rounded-sm shadow-sm w-full"
+              className="object-cover rounded-md shadow-md w-full"
             />
           </div>
           <div className="sm:flex-1 w-full">
@@ -81,8 +95,11 @@ const MovieDetail = () => {
               </div>
             </section>
 
-            <div className="fixed inset-x-0 bottom-0 bg-white sm:bg-transparent sm:p-0 p-4 sm:static sm:mt-5 mt-0 z-20">
-              <AButton variant="contained">
+            <div className="fixed inset-x-0 bottom-0 bg-slate-200 sm:bg-transparent sm:p-0 p-4 sm:static sm:mt-5 mt-0 z-20">
+              <AButton
+                handleClick={() => handleAddToWishlist(data)}
+                variant="contained"
+              >
                 <div className="flex items-center gap-3">
                   <span className="mt-1">+ Wishlist</span>
                   <BsCart2 size={20} />
